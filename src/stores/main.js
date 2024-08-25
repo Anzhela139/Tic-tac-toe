@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { defineStore } from 'pinia'
 
 import BlindMemories from '../assets/music/BlindMemories-Cheel.mp3'
 import CircleDance from '../assets/music/CircleDance-SefChol.mp3'
@@ -19,6 +19,15 @@ import OuttaTime from '../assets/music/OuttaTime-RKVC.mp3'
 import SunsetDream from '../assets/music/SunsetDream-Cheel.mp3'
 import ThatOneBarScene from '../assets/music/ThatOneBarScene-RKVC.mp3'
 import WalkingIInTheSky from '../assets/music/WalkingIInTheSky-NicoStaf.mp3'
+
+import { get } from '../utils'
+
+const size = get('size') || 3
+const setEmptyBoard = (size, value) => {
+  const boardArray = [...Array(size)].map(() => Array(size).fill(value))
+  console.log(boardArray)
+  return boardArray
+}
 
 const audios = [
   {
@@ -137,18 +146,129 @@ const audios = [
   }
 ]
 
-export const audiosSlice = createSlice({
-  name: 'audios',
-  initialState: {
-    value: audios
-  },
-  reducers: {
-    changeAudios: (state, action) => {
-      state.value = action.payload
+const player = get('player1') || "Player1"
+const mode = get('mode') || isDark ? 'dark' : 'light'
+const symbol = get('symbol') || "cross"
+
+export const useStore = defineStore('storeId', {
+  state: () => {
+    return {
+      menu: {
+        type: String,
+        default: "StartScreen"
+      },
+      size: {
+        type: Number,
+        default: size
+      },
+      mode: {
+        type: String,
+        default: mode
+      },
+      symbol: {
+        type: String,
+        default: symbol
+      },
+      victory: {
+        type: Number,
+        default: 0
+      },
+      defeat: {
+        type: Number,
+        default: 0
+      },
+      IsMultiPlayer: {
+        type: Boolean,
+        default: false
+      },
+      login: {
+        type: String,
+        default: player
+      },
+      isCurrentlyPlaying: {
+        type: Boolean,
+        default: false
+      },
+      isSavedGame: {
+        type: Boolean,
+        default: false
+      },
+      audio: {
+        type: String,
+        default: ""
+      },
+      audios: {
+        type: [],
+        default: audios
+      },
+      move: {
+        type: Number,
+        default: 0
+      },
+      board: {
+        type: [],
+        default: setEmptyBoard(size, '')
+      },
     }
-  }
+  },
+  getters: {
+    getMenu: (state) => state.menu,
+    getSize: (state) => state.size,
+    getMode: (state) => state.mode,
+    getSymbol: (state) => state.symbol,
+    getVictory: (state) => state.victory,
+    getDefeat: (state) => state.defeat,
+    getIsMultiPlayer: (state) => state.IsMultiPlayer,
+    getLogin: (state) => state.login,
+    getIsCurrentlyPlaying: (state) => state.isCurrentlyPlaying,
+    getIsSavedGame: (state) => state.isSavedGame,
+    getAudio: (state) => state.audio,
+    getAudios: (state) => state.audios,
+    getMove: (state) => state.move,
+    getBoard: (state) => state.board,
+  },
+  actions: {
+    setMenu(value) {
+      this.menu = value;
+    },
+    setSize(value) {
+      this.size = value;
+    },
+    setMode(value) {
+      this.mode = value === 'light' ? 'dark' : 'light';
+    },
+    setSymbol(value) {
+      this.symbol = value === 'img' ? 'cross' : 'img';
+    },
+    setVictory(value) {
+      this.victory = value;
+    },
+    setDefeat(value) {
+      this.defeat = value;
+    },
+    setIsMultiPlayer() {
+      this.IsMultiPlayer = !this.IsMultiPlayer;
+    },
+    setLogin(value) {
+      this.login = value;
+    },
+    setIsCurrentlyPlaying() {
+      this.isCurrentlyPlaying = !this.isCurrentlyPlaying;
+    },
+    setIsSavedGame() {
+      this.isSavedGame = !this.isSavedGame;
+    },
+    setAudios(value) {
+      this.audios = value;
+    },
+    setAudio(value) {
+      this.audio = value;
+    },
+    setMove(value) {
+      this.move = value;
+    },
+    setBoard(value) {
+      this.board = value;
+    },
+  },
 })
-
-export const { changeAudios } = audiosSlice.actions
-
-export default audiosSlice.reducer
