@@ -1,5 +1,4 @@
-import React from 'react'
-import Icon from '@mdi/react';
+import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiArrowLeft } from '@mdi/js';
 import { mdiWindowClose } from '@mdi/js';
 import { useSelector } from 'react-redux'

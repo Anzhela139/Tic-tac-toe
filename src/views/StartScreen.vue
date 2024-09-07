@@ -1,9 +1,6 @@
-import React from 'react'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { get, set } from '../utils'
 import { mdiImageOutline } from '@mdi/js';
-import Icon from '@mdi/react';
+import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiAccountCircleOutline } from '@mdi/js';
 import { mdiWindowClose } from '@mdi/js';
 

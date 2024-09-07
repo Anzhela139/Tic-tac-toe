@@ -1,8 +1,4 @@
-import React from 'react'
-import { useState, useEffect, useCallback, useRef } from 'react'
-import Icon from '@mdi/react';
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiVolumeLow } from '@mdi/js';
 import { changeAudio } from '../store/audio'
 import { changeAudios } from '../store/audios'

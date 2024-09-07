@@ -1,46 +1,44 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { changeMenu } from './../store/menuSlice.js'
-import Timer from './Timer'
-import AudioControls from './audioControls.vue';
+<script setup>
+import { reactive, computed } from 'vue'
+import Timer from './Timer.vue'
+import AudioControls from './AudioControls.vue';
+import { useStore } from './../stores/main'
 
-const Navbar = (props) => {
-  const audio = useSelector(state => state.audio)
-  const login = useSelector(state => state.login)
-  const isCurrentlyPlaying = useSelector(state => state.isCurrentlyPlaying)
-  const move = useSelector(state => state.move)
-  const victory = useSelector(state => state.victory)
-  const defeat = useSelector(state => state.defeat)
-  const dispatch = useDispatch()
+const store = useStore()
+const audio = computed(() => store.audio)
+const login = computed(() => store.login)
+const isCurrentlyPlaying = computed(() => store.isCurrentlyPlaying)
+const move = computed(() => store.move)
+const victory = computed(() => store.victory)
+const defeat = computed(() => store.defeat)
 
-  const handleMenu = (event) => {
-    event.preventDefault()
+const handleMenu = (event) => {
+  event.preventDefault()
 
-    dispatch(changeMenu('StartScreen'));
-  }
-
-  return (
-    <div class="navbar">
-      <div class="title">
-        <h1 class='app-title'>Tic tac toe</h1>
-        <button class="btn btn-secondary" onClick={handleMenu}>
-          Menu
-        </button>
-      </div>
-      {isCurrentlyPlaying.value && <div class="statistics">
-        <h2>
-          {login.value}: {move.value}
-        </h2>
-        <h2>Victories: {victory.value}</h2>
-        <h2>Defeats: {defeat.value}</h2>
-        <h2>
-          <Timer />
-        </h2>
-      </div>}
-      <AudioControls />
-    </div>
-  )
+  store.setMenu();
 }
+</script>
 
-export default Navbar
+<template>
+  <div class="navbar">
+    <div class="title">
+      <h1 class='app-title'>Tic tac toe</h1>
+      <button class="btn btn-secondary" @click={handleMenu}>
+        Menu
+      </button>
+    </div>
+    <div class="statistics" v-if="isCurrentlyPlaying">
+      <h2>
+        {{ login.value }}: {{ move.value}}
+      </h2>
+      <h2>Victories: {{ victory.value }}</h2>
+      <h2>Defeats: {{ defeat.value }}</h2>
+      <h2>
+        <Timer />
+      </h2>
+    </div>
+    <AudioControls />
+  </div>
+</template>
+
+<style scoped></style>

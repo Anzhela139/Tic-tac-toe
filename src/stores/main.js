@@ -147,68 +147,31 @@ const audios = [
 ]
 
 const player = get('player1') || "Player1"
+const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+
 const mode = get('mode') || isDark ? 'dark' : 'light'
 const symbol = get('symbol') || "cross"
 
-export const useStore = defineStore('storeId', {
+export const useStore = defineStore('storeApp', {
   state: () => {
     return {
-      menu: {
-        type: String,
-        default: "StartScreen"
-      },
-      size: {
-        type: Number,
-        default: size
-      },
-      mode: {
-        type: String,
-        default: mode
-      },
-      symbol: {
-        type: String,
-        default: symbol
-      },
+      menu: "StartScreen",
+      size: size,
+      mode: mode,
+      symbol: symbol,
       victory: {
         type: Number,
         default: 0
       },
-      defeat: {
-        type: Number,
-        default: 0
-      },
-      IsMultiPlayer: {
-        type: Boolean,
-        default: false
-      },
-      login: {
-        type: String,
-        default: player
-      },
-      isCurrentlyPlaying: {
-        type: Boolean,
-        default: false
-      },
-      isSavedGame: {
-        type: Boolean,
-        default: false
-      },
-      audio: {
-        type: String,
-        default: ""
-      },
-      audios: {
-        type: [],
-        default: audios
-      },
-      move: {
-        type: Number,
-        default: 0
-      },
-      board: {
-        type: [],
-        default: setEmptyBoard(size, '')
-      },
+      defeat: 0,
+      IsMultiPlayer: false,
+      login: player,
+      isCurrentlyPlaying: false,
+      isSavedGame: false,
+      audio: '',
+      audios: audios,
+      move: 0,
+      board: setEmptyBoard(size, ''),
     }
   },
   getters: {

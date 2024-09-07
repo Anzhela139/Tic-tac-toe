@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 
@@ -6,10 +7,10 @@ import HelloWorld from './components/HelloWorld.vue'
 // import { useSelector } from 'react-redux'
 // import { useDispatch } from 'react-redux'
 // import { changeMode } from './store/modeSlice'
-// import Navbar from './components/Navbar.vue'
+import Navbar from './components/Navbar.vue'
 // import Game from './components/Game1.vue'
 // import Menu from './components/Menu.vue'
-// import Footer from './components/Footer.vue'
+import Footer from './components/Footer.vue'
 import SvgBG from './components/SvgBG.vue'
 import { get } from './utils'
 
@@ -92,9 +93,7 @@ function App() {
     setIsCPUNext(false);
   }
 
-
-
-  useEffect(() => {
+  onMounted(() => {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
       dispatch(changeMode());
     });
@@ -119,11 +118,10 @@ function App() {
         handleTheme()
       }
     })
-    return document.addEventListener('keydown', (event) => {
+    document.addEventListener('keydown', (event) => {
       console.log(event)
     })
-    //eslint-disable-next-line
-  }, [])
+  })
 }
 </script>
 
@@ -131,11 +129,12 @@ function App() {
   <div class="container dark-theme">
     <div class="svg_background">
       <SvgBG />
+      <Navbar ties={ties} username1={username1} username2={username2} player1={player1} player2={player2}
+        handleMenu={handleMenu} />
       <RouterView />
+      <Footer theme={isLight} />
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

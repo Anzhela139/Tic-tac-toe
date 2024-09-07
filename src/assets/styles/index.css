@@ -79,12 +79,7 @@ svg.icons:hover {
   user-select: none;
 }
 
-.svg_background svg {
-  min-width: 100vw;
-  min-height: 100vh;
-}
-
-.App.dark-theme .svg_background {
+.dark-theme .svg_background {
   background: linear-gradient(25deg, #1768c5, #985b99, #d1456d, #ff0542);
 }
 

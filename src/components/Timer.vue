@@ -1,26 +1,27 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+<script setup>
+import { ref, onBeforeMount } from 'vue';
 
-const Timer = () => {
-  const now = new Date().toLocaleTimeString()
-  let [time, setTime] = useState(now)
+const now = new Date().toLocaleTimeString()
+const time = ref(now);
 
-  function updateTime() {
-    const newTime = new Date().toLocaleTimeString()
-    setTime(newTime)
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      updateTime()
-    }, 1000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
-
-  return <div class="timer">{time}</div>
+function updateTime() {
+  const newTime = new Date().toLocaleTimeString()
+  time.value = newTime;
 }
 
-export default Timer
+onBeforeMount(() => {
+  const interval = setInterval(() => {
+    updateTime()
+  }, 1000)
+
+  return () => {
+    clearInterval(interval)
+  }
+})
+</script>
+
+<template>
+  <div class="timer">{{ time }}</div>
+</template>
+
+<style scoped></style>

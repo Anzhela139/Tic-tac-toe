@@ -12,7 +12,7 @@ import Audio from '../views/Audio.vue'
 import { changeMenu } from './../store/menuSlice.js'
 import { get, set } from '../utils'
 import { mdiImageOutline } from '@mdi/js';
-import Icon from '@mdi/react';
+import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiAccountCircleOutline } from '@mdi/js';
 import { mdiWindowClose } from '@mdi/js';
 

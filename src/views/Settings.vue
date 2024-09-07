@@ -1,11 +1,9 @@
-import React from 'react'
-import Icon from '@mdi/react';
+import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiAccountCircleOutline } from '@mdi/js';
 import { mdiWeatherNight } from '@mdi/js';
 import { mdiWeatherSunny } from '@mdi/js';
 import { mdiVolumeMedium } from '@mdi/js';
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+
 import { changeSize } from '../store/sizeSlice.js'
 import { changeSymbol } from '../store/symbolSlice.js'
 import { changeMode } from '../store/modeSlice.js'
