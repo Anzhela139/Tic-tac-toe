@@ -77,6 +77,7 @@ svg.icons:hover {
   height: 100vh;
   z-index: -1;
   user-select: none;
+  pointer-events: none;
 }
 
 .dark-theme .svg_background {
@@ -113,13 +114,13 @@ svg.icons:hover {
 }
 
 .light-theme .navbar,
-.light-theme .App-footer,
+.light-theme .footer,
 .light-theme .tile {
   background-color: rgba(249, 249, 249, .6);
 }
 
 .dark-theme .navbar,
-.dark-theme .App-footer,
+.dark-theme .footer,
 .dark-theme .tile {
   background-color: rgba(40, 44, 52, .2);
   box-shadow: 0px 0px 8px 0px rgba(243, 244, 246, .4);
@@ -135,7 +136,7 @@ svg.icons:hover {
   color: #fff;
 }
 
-.App-link {
+.link {
   color: #61dafb;
   text-decoration: none;
 }
@@ -273,31 +274,19 @@ input.switch_toggle-input:checked+label:after {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  z-index: 5;
   overflow: hidden;
 }
 
-.board-row {
+.board .cell {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: stretch;
-  border-bottom: 2px solid #282c34;
   overflow: hidden;
-}
-
-.board-row:first-child {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-}
-
-.board-row:last-child {
-  border-bottom: none;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  background-color: rgba(34, 34, 34, .7);
+  backdrop-filter: blur(5px);
 }
 
 .line{
@@ -319,7 +308,7 @@ input.switch_toggle-input:checked+label:after {
   color: #f9f9f9;
 }
 
-.App-footer {
+.footer {
   position: absolute;
   width: 100%;
   padding: 1rem 0;
@@ -328,11 +317,12 @@ input.switch_toggle-input:checked+label:after {
   align-items: center;
   justify-content: space-evenly;
   z-index: 2;
+  left: 0;
   box-shadow: -2px -2px 7px 1px rgba(40,44,52,0.45);
   backdrop-filter: blur(5px);
 }
 
-.App-footer img {
+.footer img {
   width: 60px;
 }
 

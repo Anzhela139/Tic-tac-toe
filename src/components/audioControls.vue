@@ -126,8 +126,8 @@ onMounted(() => {
 <template>
   <div class="audios">
     <audio ref='audioDOM' :src="srcAudio?.src" @onEnded="playNext" />
-      <div class="wrapper" v-if="audio.value !== ''">
-        <h4>
+    <div class="wrapper" v-if="audio.value !== ''">
+      <h4>
         {{ srcAudio?.title }}
       </h4>
       <div>
@@ -138,14 +138,14 @@ onMounted(() => {
         <input type="range" id="volume" name="volume" min="0" max="100" />
       </div>
       <SvgIcon :path="mdiSkipPrevious" :size="1" @click="playPrevSong" />
-      <SvgIcon :path="mdiPause" :size="1" @click="stopMusic" v-if="isPlaying"/>
+      <SvgIcon :path="mdiPause" :size="1" @click="stopMusic" v-if="isPlaying" />
       <SvgIcon :path="mdiPlay" :size="1" @click="resumeMusic" v-else />
       <SvgIcon :path="mdiSkipNext" :size="1" @click="playNextSong" />
       <SvgIcon :path="mdiPlaylistMusic" :size="1" @click="handleAudio" />
       <SvgIcon :path="mdiRepeat" :size="1" @click="handleOnRepeat" />
       <SvgIcon :path="mdiShuffleVariant" :size="1" @click="handleRandomize" />
       <SvgIcon :path="mdiVolumeHigh" :size="1" @click="volumeUp" />
-      </div>
+    </div>
   </div>
 </template>
 

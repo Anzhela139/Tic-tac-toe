@@ -1,7 +1,4 @@
-import React from 'react'
-
-function Keys(props) {
-  return (
+<template>
     <div class="wrapper-">
       <h2>Hot keys</h2>
       <ul>
@@ -14,7 +11,8 @@ function Keys(props) {
         <li>Key 't' - change theme of app.</li>
       </ul>
     </div>
-  )
-}
+</template>
 
-export default Keys
+<style scoped>
+
+</style>

@@ -1,7 +1,8 @@
-import React from 'react'
+<script setup>
 
-function Solution(props) {
-  return (
+</script>
+
+<template>
     <div class="wrapper-">
       <h2>Hot keys</h2>
       <ul>
@@ -14,7 +15,8 @@ function Solution(props) {
         <li>Key 't' - change theme of app.</li>
       </ul>
     </div>
-  )
-}
+</template>
 
-export default Solution
+<style scoped>
+
+</style>

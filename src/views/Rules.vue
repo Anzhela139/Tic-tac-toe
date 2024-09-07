@@ -1,10 +1,8 @@
-import React from 'react'
+<script setup>
 
-class Rules extends React.Component {
-  state = {}
-  render() {
-    const { handleRules } = this.props
-    return (
+</script>
+
+<template>
       <div class="wrapper">
         <blockquote>
           Tic-tac-toe (American English), noughts and crosses (Commonwealth English), or Xs and
@@ -16,8 +14,8 @@ class Rules extends React.Component {
           <strong>Wikipedia</strong>
         </cite>
       </div>
-    )
-  }
-}
+</template>
 
-export default Rules
+<style scoped>
+
+</style>

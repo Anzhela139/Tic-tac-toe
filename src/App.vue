@@ -129,11 +129,10 @@ function App() {
   <div class="container dark-theme">
     <div class="svg_background">
       <SvgBG />
-      <Navbar ties={ties} username1={username1} username2={username2} player1={player1} player2={player2}
-        handleMenu={handleMenu} />
-      <RouterView />
-      <Footer theme={isLight} />
     </div>
+    <Navbar />
+    <RouterView />
+    <Footer />
   </div>
 </template>
 

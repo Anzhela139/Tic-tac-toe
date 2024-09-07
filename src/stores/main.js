@@ -155,7 +155,7 @@ const symbol = get('symbol') || "cross"
 export const useStore = defineStore('storeApp', {
   state: () => {
     return {
-      menu: "StartScreen",
+      menu: "",
       size: size,
       mode: mode,
       symbol: symbol,
