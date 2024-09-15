@@ -21,11 +21,6 @@ body {
   height: 100vh;
 }
 
-#root {
-  height: 100vh;
-  overflow: hidden;
-}
-
 h1 {
   font-family: 'Hand-Board';
 }
@@ -285,6 +280,10 @@ input.switch_toggle-input:checked+label:after {
   justify-content: center;
   align-items: stretch;
   overflow: hidden;
+  font-size: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(34, 34, 34, .7);
   backdrop-filter: blur(5px);
 }
@@ -548,42 +547,13 @@ select {
 
 .form-group {
   display: grid;
-  row-gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: 24px;
+  column-gap: 24px;
 }
 
-.form-group * {
-  width: 100%;
-}
-
-:root,
-:host {
-  --md-outlined-select-text-field-outline-color: #61dafb;
-  --text-field-hover-state-layer-color: #61dafb;
-  --md-outlined-select-text-field-container-shape: 10px;
-  --md-outlined-select-text-field-input-text-color: #f9f9f9;
-  --md-outlined-select-text-field-input-text-font: 'Montserrat', sans-serif;
-  --_menu-list-item-label-text-font: 'Montserrat', sans-serif;
-
-  --md-filled-text-field-container-shape: 10px;
-  --md-sys-typescale-body-large: 400 1rem 'Montserrat', sans-serif;
-  --md-sys-color-primary: #61dafb;
-  --md-outlined-field-hover-content-color: #f9f9f9;
-  --md-sys-color-on-surface: #f9f9f9;
-  --md-outlined-field-label-text-color: #f9f9f9;
-  --md-outlined-field-content-font: 'Montserrat', sans-serif;
-  --md-outlined-field-focus-leading-content-color: #f9f9f9;
-  --md-outlined-text-field-label-text-color: #f9f9f9;
-  --md-outlined-text-field-input-text-placeholder-color: #f9f9f9;
-  --md-outlined-text-field-input-text-font: 'Montserrat', sans-serif;
-  --md-outlined-text-field-label-text-font: 'Montserrat', sans-serif;
-  --md-sys-color-surface-container-highest: #f9f9f9;
-  --md-filled-text-field-label-text-color: #f9f9f9;
-  --md-filled-text-field-input-text-color: #f9f9f9;
-}
-
-md-outlined-select::part(menu) {
-  --md-menu-container-color: #282c34;
-  /* --md-menu-container-shape: 0px; */
+.grid-row {
+  grid-column: 1/3;
 }
 
 @keyframes fadeIn {

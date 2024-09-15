@@ -12,7 +12,7 @@ import { mdiTuneVerticalVariant } from '@mdi/js';
 import { randomizeArray } from '../utils'
 // const audio = useSelector(state => state.audio)
 // const audios = useSelector(state => state.audios)
-const audioDOM = useRef(null);
+// const audioDOM = useRef(null);
 
 // const dispatch = useDispatch()
 // const [isActive, setActive] = useState(false)
@@ -60,7 +60,7 @@ const playAudio = (audio) => {
 
 }
 
-const reload = useCallback(() => {
+const reload = () => {
     try {
         setActive(true)
         setCurrI(currI + 1)
@@ -82,8 +82,7 @@ const reload = useCallback(() => {
         console.log(error)
     }
     //eslint-disable-next-line
-}, [currI, srcAudio, audioDOM])
-
+}
 const stopMusic = (event) => {
     audioDOM.pause()
     audioDOM.currentTime = 0

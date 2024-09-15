@@ -17,6 +17,7 @@ const move = computed(() => store.move)
 const victory = computed(() => store.victory)
 const defeat = computed(() => store.defeat)
 
+
 // const handleMenu = (event) => {
 //   event.preventDefault()
 //   router.push({ path: 'start-screen'})

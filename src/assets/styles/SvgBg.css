@@ -1036,7 +1036,7 @@
 }
 
 .dark-theme .st171 {
-    fill: #282c34;
+    fill: var(--theme-background-color);
 }
 
 .st172 {

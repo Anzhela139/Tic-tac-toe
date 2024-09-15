@@ -1,8 +1,10 @@
 <script setup>
-
+import Base from '@/components/Base.vue';
 </script>
 
 <template>
+  <div>
+    <Base :modalName="'Rules'">
       <div class="wrapper">
         <blockquote>
           Tic-tac-toe (American English), noughts and crosses (Commonwealth English), or Xs and
@@ -14,8 +16,8 @@
           <strong>Wikipedia</strong>
         </cite>
       </div>
+    </Base>
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -20,12 +20,11 @@ import SunsetDream from '../assets/music/SunsetDream-Cheel.mp3'
 import ThatOneBarScene from '../assets/music/ThatOneBarScene-RKVC.mp3'
 import WalkingIInTheSky from '../assets/music/WalkingIInTheSky-NicoStaf.mp3'
 
-import { get } from '../utils'
+import { get, set } from '../utils'
 
 const size = get('size') || 3
-const setEmptyBoard = (size, value) => {
-  const boardArray = [...Array(size)].map(() => Array(size).fill(value))
-  console.log(boardArray)
+const setEmptyBoard = (size) => {
+  const boardArray = [...Array(size * size)].fill('')
   return boardArray
 }
 
@@ -199,6 +198,15 @@ export const useStore = defineStore('storeApp', {
     },
     setMode() {
       this.mode = this.mode === 'light' ? 'dark' : 'light';
+      if (this.mode === 'dark') {
+        document.documentElement.style.setProperty("--theme-background-color", '#282c34');
+        document.documentElement.style.setProperty("--theme-color", '#f9f9f9');
+      } else {
+        document.documentElement.style.setProperty("--theme-background-color", '#f9f9f9');
+        document.documentElement.style.setProperty("--theme-color", '#161616');
+      }
+
+      set('mode', this.mode);
       console.log(this.mode)
     },
     setSymbol(value) {
@@ -215,6 +223,7 @@ export const useStore = defineStore('storeApp', {
     },
     setLogin(value) {
       this.login = value;
+      set('player1_23096', value);
     },
     setIsCurrentlyPlaying() {
       this.isCurrentlyPlaying = !this.isCurrentlyPlaying;

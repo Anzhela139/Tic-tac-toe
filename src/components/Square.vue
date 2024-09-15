@@ -1,14 +1,24 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { defineEmits, ref, computed, onMounted } from 'vue'
 import SvgIcon from '@jamescoyle/vue-icon';
+import { useStore } from './../stores/main'
 import { mdiBeeFlower } from '@mdi/js';
 import { mdiSnail } from '@mdi/js';
+const store = useStore()
+const symbol = computed(() => store.symbol)
+const emit = defineEmits(['click'])
 const active = ref(false)
-// defineProps({
-//   counter: {
-//     type: String,
-//     required: true
-//   }, 
+const actualValue = ref('')
+defineProps({
+  id: {
+    type: String,
+    required: true
+  },
+  initValue: {
+    type: String,
+    required: true
+  },
+})
 //   size: {
 //     type: String,
 //     required: true
@@ -31,8 +41,9 @@ const active = ref(false)
 
 const handleClick = (event) => {
   event.preventDefault()
-  setActive(true)
-  // props.@click()
+  active.value = true;
+  actualValue.value = 'X'
+  emit('click', actualValue.value)
 }
 
 const styleReturn = () => {
@@ -46,7 +57,12 @@ const handleWinner = () => {
 </script>
 
 <template>
-  <div class="cell" @click="handleWinner"></div>
+  <div class="cell" @click="handleClick">
+    <template v-if="initValue || actualValue">
+      <span v-if="symbol === 'cross'">X</span>
+      <SvgIcon :path="mdiBeeFlower" type="mdi" v-else />
+    </template>
+  </div>
 </template>
 
 <style scoped>

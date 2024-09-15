@@ -3,7 +3,7 @@
 }
 
 .multiselect__tags {
-  background-color: #282c34;
+  background-color: var(--theme-background-color);
 }
 
 .multiselect__input,
@@ -11,6 +11,6 @@
 .multiselect__spinner,
 .multiselect__content-wrapper,
 .multiselect__option--disabled {
-  background-color: #282c34 !important;
+  background-color: var(--theme-background-color) !important;
 }
 

@@ -12,6 +12,7 @@ const modalStyles = {
     width: '100%',
 }
 const router = useRouter()
+const route = useRoute()
 defineProps({
     modalName: {
         type: String,
@@ -19,7 +20,12 @@ defineProps({
     }
 })
 const handleBack = () => {
-
+  console.log(route)
+  if (route.fullPath !== '/start-screen') {
+    router.push({ path: '/start-screen' })
+  } else {
+    router.push({ path: '/' })
+  }
 }
 const handleClose = () => {
 
@@ -36,7 +42,7 @@ const handleClose = () => {
                 </div>
                 <slot></slot>
             </div>
-            <div class="fade" @click='handleClose'></div>
+            <div class="fade" @click="handleMenu(router, '/')"></div>
         </div>
 </template>
 

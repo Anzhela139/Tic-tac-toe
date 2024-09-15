@@ -6,6 +6,7 @@ import { reactive, computed, onMounted } from 'vue'
 import { get, set } from '../utils'
 import Base from '@/components/Base.vue';
 import ToggleButton from '@/components/ToggleButton.vue';
+import CustomInput from '@/components/CustomInput.vue';
 // import { useSelector } from 'react-redux'
 // import { useDispatch } from 'react-redux'
 // import { changelogin } from '../store/loginSlice'
@@ -19,16 +20,7 @@ import ToggleButton from '@/components/ToggleButton.vue';
 const store = useStore()
 const IsMultiPlayer = computed(() => store.IsMultiPlayer)
 const handlePlayer1 = (event) => {
-  let player = event.target.id
-  // if (player === 'player1') {
-  //   setPlayer1(event.target.value)
-  //   set('player1_23096', event.target.value)
-  // } else {
-  //   setPlayer2(event.target.value)
-  //   set('player2_28096', event.target.value)
-  // }
-
-  dispatch(changelogin(event.target.value));
+  store.setLogin(event)
 }
 
 const handlePlayer2 = (event) => {
@@ -47,9 +39,7 @@ const handlePlayer2 = (event) => {
 
 const hanleMultiPlayer = (event) => {
   console.log(event)
-  // event.preventDefault()
-  console.log(event.target?.checked)
-  dispatch(changeIsMultiPlayer(event.target?.checked));
+  store.setIsMultiPlayer(event)
 }
 
 const handleClick = (event) => {
@@ -60,24 +50,25 @@ const handleClick = (event) => {
 </script>
 
 <template>
-  <Base :modalName="'Settings'">
-    <form class="wrapper">
-      <div class="form-group">
-        <md-outlined-text-field label="Name 1" placeholder="player1" @change="handlePlayer1">
-        </md-outlined-text-field>
-        <md-outlined-text-field v-if="IsMultiPlayer" label="Name 2" placeholder="player1" @change="handlePlayer2">
-        </md-outlined-text-field>
-        <div>
-          <label class='settings-card'>
-            <div class='settings-label'>Multi-person game mode</div>
-            <ToggleButton :id="'IsMultiPlayer'" @change='hanleMultiPlayer' />
-          </label>
-        </div>
+  <Base :modalName="'Login'">
+  <form class="wrapper">
+    <div class="form-group">
+      <CustomInput :label="'Name 1'" :placeholder="'player1'" @change="handlePlayer1" :id="'player1'" />
+      <CustomInput v-if="IsMultiPlayer" :label="'Name 2'" :placeholder="'player2'" :id="'player2'"
+        @change="handlePlayer2" />
+      <div class="grid-row">
+        <label class='settings-card'>
+          <div class='settings-label'>Multi-person game mode</div>
+          <ToggleButton :id="'IsMultiPlayer'" @change='hanleMultiPlayer' />
+        </label>
+      </div>
+      <div class="grid-row">
         <button @click="handleClick" class="btn btn-primary" type='button'>
           Start new game
         </button>
       </div>
-    </form>
+    </div>
+  </form>
   </Base>
 </template>
 

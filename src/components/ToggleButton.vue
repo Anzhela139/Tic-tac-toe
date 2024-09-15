@@ -10,7 +10,7 @@ defineProps({
     }
 })
 const handleChange = () => {
-  emit('change', )
+  emit('change', value.value)
 }
 </script>
 
