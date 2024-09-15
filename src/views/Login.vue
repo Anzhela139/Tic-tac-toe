@@ -1,16 +1,23 @@
 <script setup>
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
+import { useStore } from './../stores/main'
+import { reactive, computed, onMounted } from 'vue'
+
 import { get, set } from '../utils'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { changelogin } from '../store/loginSlice'
-import { changeIsMultiPlayer } from '../store/IsMultiPlayerSlice'
+import Base from '@/components/Base.vue';
+import ToggleButton from '@/components/ToggleButton.vue';
+// import { useSelector } from 'react-redux'
+// import { useDispatch } from 'react-redux'
+// import { changelogin } from '../store/loginSlice'
+// import { changeIsMultiPlayer } from '../store/IsMultiPlayerSlice'
 // import { changelogin } from '../../store/loginSlice'
-const IsMultiPlayer = useSelector(state => state.IsMultiPlayer)
-const dispatch = useDispatch()
+// const IsMultiPlayer = useSelector(state => state.IsMultiPlayer)
+// const dispatch = useDispatch()
 // const [player1, setPlayer1] = useState(get('player1_23096') || 'Player1')
 // const [player2, setPlayer2] = useState(get('player2_28096') || 'Player2')
 
+const store = useStore()
+const IsMultiPlayer = computed(() => store.IsMultiPlayer)
 const handlePlayer1 = (event) => {
   let player = event.target.id
   // if (player === 'player1') {
@@ -39,6 +46,7 @@ const handlePlayer2 = (event) => {
 
 
 const hanleMultiPlayer = (event) => {
+  console.log(event)
   // event.preventDefault()
   console.log(event.target?.checked)
   dispatch(changeIsMultiPlayer(event.target?.checked));
@@ -49,33 +57,28 @@ const handleClick = (event) => {
   // props.names(player1, player2)
   // props.handleLogin()
 }
-defineProps({
-  msg: {
-    type: String,
-    required: true
-  }
-})
 </script>
 
 <template>
-  <form class="wrapper">
-    <div class="form-group">
-      <md-outlined-text-field label="Name 1" placeholder="player1" @change="handlePlayer1">
-      </md-outlined-text-field>
-      <md-outlined-text-field v-if="IsMultiPlayer.value" label="Name 2" placeholder="player1" @change="handlePlayer2">
-      </md-outlined-text-field>
-      <div>
-        <label class='settings-card'>
-          <div class='settings-label'>Multi-person game mode</div>
-          <md-switch @input="hanleMultiPlayer" value={IsMultiPlayer.value} icons></md-switch>
-        </label>
+  <Base :modalName="'Settings'">
+    <form class="wrapper">
+      <div class="form-group">
+        <md-outlined-text-field label="Name 1" placeholder="player1" @change="handlePlayer1">
+        </md-outlined-text-field>
+        <md-outlined-text-field v-if="IsMultiPlayer" label="Name 2" placeholder="player1" @change="handlePlayer2">
+        </md-outlined-text-field>
+        <div>
+          <label class='settings-card'>
+            <div class='settings-label'>Multi-person game mode</div>
+            <ToggleButton :id="'IsMultiPlayer'" @change='hanleMultiPlayer' />
+          </label>
+        </div>
+        <button @click="handleClick" class="btn btn-primary" type='button'>
+          Start new game
+        </button>
       </div>
-      <button @click="handleClick" class="btn btn-primary" type='button'>
-        Start new game
-      </button>
-    </div>
-  </form>
+    </form>
+  </Base>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,22 +1,21 @@
 <script setup>
 import SvgIcon from '@jamescoyle/vue-icon';
+import Multiselect from 'vue-multiselect'
+
+import { reactive, computed, ref } from 'vue'
+import { useStore } from './../stores/main'
+import { useRoute, useRouter } from 'vue-router'
+import { handleMenu } from './../composables/handleMenu'
+import Base from '@/components/Base.vue';
 import { mdiAccountCircleOutline } from '@mdi/js';
 import { mdiWeatherNight } from '@mdi/js';
 import { mdiWeatherSunny } from '@mdi/js';
-import { mdiVolumeMedium } from '@mdi/js';
-
-import { changeSize } from '../store/sizeSlice.js'
-import { changeSymbol } from '../store/symbolSlice.js'
-import { changeMode } from '../store/modeSlice.js'
-import { changeMenu } from '../store/menuSlice.js'
-const symbol = useSelector(state => state.symbol)
-const mode = useSelector(state => state.mode)
-const dispatch = useDispatch()
-const handleLogin = (event) => {
-    event.preventDefault()
-
-    dispatch(changeMenu('Login'));
-}
+import { mdiMusic } from '@mdi/js';
+import ToggleButton from '@/components/ToggleButton.vue';
+const store = useStore()
+const symbol = computed(() => store.symbol)
+const mode = computed(() => store.mode)
+const router = useRouter()
 
 const handleSize = (event) => {
     event.preventDefault()
@@ -35,59 +34,56 @@ const handleSymbol = (event) => {
 
 const handleMode = (event) => {
     event.preventDefault()
-
-    dispatch(changeMode());
+    store.setMode();
 }
 
 const handleAudio = (event) => {
     event.preventDefault()
 
-    dispatch(changeMenu('Audio'));
+    store.setAudio()
 }
 
+const sizeValue = ref(3)
+const options = [
+    { name: '3', id: 'id_0' },
+    { name: '4', id: 'id_1'  },
+    { name: '5', id: 'id_2' },
+    { name: '6',  id: 'id_3'  }
+]
 </script>
 
 <template>
-    <div class="wrapper wrapper-settings">
-        <div class='settings-card card-size'>
-            <md-outlined-select onInput={handleSize} label='Select board size'>
-                <md-select-option selected value="3">
-                    <div slot="headline">3</div>
-                </md-select-option>
-                <md-select-option value="4">
-                    <div slot="headline">4</div>
-                </md-select-option>
-                <md-select-option value="5">
-                    <div slot="headline">5</div>
-                </md-select-option>
-                <md-select-option value="6">
-                    <div slot="headline">6</div>
-                </md-select-option>
-            </md-outlined-select>
+    <div>
+        <Base :modalName="'Settings'">
+        <div class="wrapper wrapper-settings">
+            <div class='settings-card card-size'>
+                <Multiselect @input='handleSize' v-model="sizeValue" :searchable="false" :options="options"
+                    placeholder="Pick a value" label='Select board size'>
+                </Multiselect>
+            </div>
+            <div class='settings-card card-symbol'>
+                <label>
+                    <div class='settings-label'>Toggle crosses or icons</div>
+                    <ToggleButton :id="'symbol'" @change='handleSymbol' />
+                </label>
+            </div>
+            <div class='settings-card card-mode'>
+                <div class='settings-label'>Toggle mode</div>
+                <SvgIcon :path='mdiWeatherNight' @click='handleMode' type="mdi" v-if="mode === 'light'" />
+                <SvgIcon :path='mdiWeatherSunny' @click='handleMode' type="mdi" v-else />
+            </div>
+            <div @click='handleAudio' class='settings-card card-audio'>
+                <label>
+                    <div class='settings-label'>Toggle audio</div>
+                    <SvgIcon :path='mdiMusic' type="mdi" />
+                </label>
+            </div>
+            <div @click="handleMenu(router, 'login')" class='settings-card card-login'>
+                <div class='settings-label'>Login</div>
+                <SvgIcon :path='mdiAccountCircleOutline' type="mdi" />
+            </div>
         </div>
-        <div class='settings-card card-symbol'>
-            <label>
-                <div class='settings-label'>Toggle crosses or icons</div>
-                <md-switch onInput={handleSymbol} icons></md-switch>
-            </label>
-        </div>
-        <div class='settings-card card-mode'>
-            <div class='settings-label'>Toggle mode</div>
-            {mode.value === 'light' &&
-            <Icon path={mdiWeatherNight} size={2} onClick={handleMode} />}
-            {mode.value === 'dark' &&
-            <Icon path={mdiWeatherSunny} size={2} onClick={handleMode} />}
-        </div>
-        <div onClick={handleAudio} class='settings-card card-audio'>
-            <label>
-                <div class='settings-label'>Toggle audio</div>
-                <Icon path={mdiVolumeMedium} size={2} />
-            </label>
-        </div>
-        <div onClick={handleLogin} class='settings-card card-login'>
-            <div class='settings-label'>Login</div>
-            <Icon path={mdiAccountCircleOutline} size={2} />
-        </div>
+        </Base>
     </div>
 </template>
 

@@ -197,8 +197,9 @@ export const useStore = defineStore('storeApp', {
     setSize(value) {
       this.size = value;
     },
-    setMode(value) {
-      this.mode = value === 'light' ? 'dark' : 'light';
+    setMode() {
+      this.mode = this.mode === 'light' ? 'dark' : 'light';
+      console.log(this.mode)
     },
     setSymbol(value) {
       this.symbol = value === 'img' ? 'cross' : 'img';
@@ -225,7 +226,7 @@ export const useStore = defineStore('storeApp', {
       this.audios = value;
     },
     setAudio(value) {
-      this.audio = value;
+      this.audio = value || this.audios[0];
     },
     setMove(value) {
       this.move = value;

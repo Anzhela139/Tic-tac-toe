@@ -2,10 +2,8 @@
 import { reactive, computed, onMounted } from 'vue'
 import SvgIcon from '@jamescoyle/vue-icon';
 import { useStore } from './../stores/main'
-import { mdiVolumeLow } from '@mdi/js';
+import { mdiMusic } from '@mdi/js';
 import { mdiVolumeHigh } from '@mdi/js';
-import { mdiVolumeMedium } from '@mdi/js';
-import { mdiVolumeOff } from '@mdi/js';
 import { mdiRepeat } from '@mdi/js';
 import { mdiShuffleVariant } from '@mdi/js';
 import { mdiPlaylistMusic } from '@mdi/js';
@@ -13,8 +11,8 @@ import { mdiPlay } from '@mdi/js';
 import { mdiPause } from '@mdi/js';
 import { mdiSkipNext } from '@mdi/js';
 import { mdiSkipPrevious } from '@mdi/js';
-
-import { mdiTuneVerticalVariant } from '@mdi/js';
+import { useRoute, useRouter } from 'vue-router'
+import { handleMenu } from './../composables/handleMenu'
 import { randomizeArray } from '../utils'
 import { ref } from 'vue';
 
@@ -22,6 +20,7 @@ const store = useStore()
 const audio = computed(() => store.audio)
 const audios = computed(() => store.audios)
 const audioDOM = ref(null);
+const router = useRouter()
 const isActive = ref(false)
 const isOnRepeat = ref(false)
 const currI = ref(0)
@@ -126,7 +125,8 @@ onMounted(() => {
 <template>
   <div class="audios">
     <audio ref='audioDOM' :src="srcAudio?.src" @onEnded="playNext" />
-    <div class="wrapper" v-if="audio.value !== ''">
+    <svg-icon type="mdi" :path="mdiMusic" @click="handleMenu(router, 'audio')" />
+    <div class="wrapper" v-if="audio">
       <h4>
         {{ srcAudio?.title }}
       </h4>
@@ -137,14 +137,14 @@ onMounted(() => {
       <div>
         <input type="range" id="volume" name="volume" min="0" max="100" />
       </div>
-      <SvgIcon :path="mdiSkipPrevious" :size="1" @click="playPrevSong" />
-      <SvgIcon :path="mdiPause" :size="1" @click="stopMusic" v-if="isPlaying" />
-      <SvgIcon :path="mdiPlay" :size="1" @click="resumeMusic" v-else />
-      <SvgIcon :path="mdiSkipNext" :size="1" @click="playNextSong" />
-      <SvgIcon :path="mdiPlaylistMusic" :size="1" @click="handleAudio" />
-      <SvgIcon :path="mdiRepeat" :size="1" @click="handleOnRepeat" />
-      <SvgIcon :path="mdiShuffleVariant" :size="1" @click="handleRandomize" />
-      <SvgIcon :path="mdiVolumeHigh" :size="1" @click="volumeUp" />
+      <SvgIcon :path="mdiSkipPrevious" type="mdi" @click="playPrevSong" />
+      <SvgIcon :path="mdiPause" type="mdi" @click="stopMusic" v-if="isPlaying" />
+      <SvgIcon :path="mdiPlay" type="mdi" @click="resumeMusic" v-else />
+      <SvgIcon :path="mdiSkipNext" type="mdi" @click="playNextSong" />
+      <SvgIcon :path="mdiPlaylistMusic" type="mdi" @click="handleAudio" />
+      <SvgIcon :path="mdiRepeat" type="mdi" @click="handleOnRepeat" />
+      <SvgIcon :path="mdiShuffleVariant" type="mdi" @click="handleRandomize" />
+      <SvgIcon :path="mdiVolumeHigh" type="mdi" @click="volumeUp" />
     </div>
   </div>
 </template>

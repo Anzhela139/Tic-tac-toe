@@ -1,6 +1,9 @@
 @import './base.css';
 @import './styles/index.css';
 @import './styles/SvgBg.css';
+@import './styles/vue-multiselect.css';
+@import './styles/multiselect-custom.css';
+
 #app {
   max-width: 1280px;
   margin: 0 auto;

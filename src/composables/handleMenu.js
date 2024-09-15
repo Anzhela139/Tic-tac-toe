@@ -1,3 +1,3 @@
 export function handleMenu(router, menuItem) {
-    router.push({ path: menuItem})
+  router.push({ path: menuItem })
 }

@@ -32,7 +32,7 @@ const active = ref(false)
 const handleClick = (event) => {
   event.preventDefault()
   setActive(true)
-  props.onClick()
+  // props.@click()
 }
 
 const styleReturn = () => {
