@@ -24,7 +24,12 @@ import { get, set } from '../utils'
 
 const size = get('size') || 3
 const setEmptyBoard = (size) => {
-  const boardArray = [...Array(size * size)].fill('')
+  const boardArray = [...Array(size * size)].fill('').map((_, index) => {
+    return {
+      id: `id${index}`,
+      value: ''
+    }
+  })
   return boardArray
 }
 

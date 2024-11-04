@@ -1,5 +1,4 @@
 <script setup>
-// import React, { useState } from 'react'
 import { useStore } from './../stores/main'
 import { reactive, computed, onMounted } from 'vue'
 
@@ -7,8 +6,6 @@ import { get, set } from '../utils'
 import Base from '@/components/Base.vue';
 import ToggleButton from '@/components/ToggleButton.vue';
 import CustomInput from '@/components/CustomInput.vue';
-// import { useSelector } from 'react-redux'
-// import { useDispatch } from 'react-redux'
 // import { changelogin } from '../store/loginSlice'
 // import { changeIsMultiPlayer } from '../store/IsMultiPlayerSlice'
 // import { changelogin } from '../../store/loginSlice'

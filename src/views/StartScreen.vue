@@ -79,9 +79,9 @@ const handleNewGame = () => {
   <div>
     <Base :modalName="'Start Screen'">
     <div class="wrapper start-screen">
-      <button class="btn btn-secondary" type='button' @click="handleMenu(router, 'gameplay')">
+      <router-link to="/gameplay" class="btn btn-secondary" tag="button">
         Gameplay
-      </button>
+      </router-link>
       <button class="btn btn-secondary" type='button' @click="handleMenu(router, 'settings')">
         Settings
       </button>

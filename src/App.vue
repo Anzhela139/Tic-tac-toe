@@ -1,10 +1,8 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { useStore } from './stores/main.js'
 
-// import React, { useEffect, useState } from 'react'
-// import { useSelector } from 'react-redux'
-// import { useDispatch } from 'react-redux'
 // import { changeMode } from './store/modeSlice'
 import Navbar from './components/Navbar.vue'
 // import Game from './components/Game1.vue'
@@ -13,20 +11,12 @@ import Footer from './components/Footer.vue'
 import SvgBG from './components/SvgBG.vue'
 import { get } from './utils'
 
+const store = useStore()
+const mode = computed(() => store.mode)
 const getSym = (sym) => {
 
 }
 
-const players = {
-  CPU: {
-    SYM: 0, // "O",
-    NAME: "CPU",
-  },
-  HUMAN: {
-    SYM: 1 || "X",
-    NAME: "You",
-  },
-};
 
 function sleep(milliseconds) {
   const date = Date.now();
@@ -41,7 +31,6 @@ function App() {
   const symbol = useSelector(state => state.symbol)
   const menu = useSelector(state => state.menu)
   const size = useSelector(state => state.size)
-  const dispatch = useDispatch()
 
   const setEmptyBoard = () => {
     const boardArray = [...Array(size.value)].map(() => Array(size.value).fill(""))
@@ -94,7 +83,7 @@ function App() {
 
   onMounted(() => {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-      dispatch(changeMode());
+      // dispatch(changeMode());
     });
 
     document.addEventListener('keydown', (event) => {
@@ -125,7 +114,7 @@ function App() {
 </script>
 
 <template>
-  <div class="container dark-theme">
+  <div class="container" :class="mode === 'dark' ? 'dark-theme' : 'light-theme'">
     <div class="svg_background">
       <SvgBG />
     </div>

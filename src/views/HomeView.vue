@@ -2,7 +2,67 @@
 import { ref, computed, onMounted } from 'vue'
 import Board from './../components/Board.vue'
 import { isEndgame } from '../utils'
+import { useStore } from './../stores/main'
+import Square from '../components/Square.vue';
 
+const store = useStore()
+const size = computed(() => store.size);
+const board = computed(() => store.board);
+const isCPUNext = ref(false)
+
+// defineProps({
+//     msg: {
+//         type: String,
+//         required: true
+//     }
+// })
+// const array = setEmptyBoard('')
+// console.log(array)
+const getStyleBoard = () => {
+  return {
+    'grid-template-columns': `repeat(${size.value}, minmax(0, 1fr))`,
+    'grid-template-rows': `repeat(${size.value}, minmax(0, 1fr))`
+  }
+}
+
+const getStyleCell = (index) => {
+  let styles = {}
+  const border = '1px solid rgba(255, 255, 255, .6)'
+  const borderBottom = {
+    'border-bottom': border
+  }
+  const borderRight = {
+    'border-right': border
+  }
+  if (index === 0) {
+    styles = {
+      'border-top-left-radius': "15px"
+    }
+  }
+  if (((index + 1) / size.value) === 1) {
+    styles = {
+      'border-top-right-radius': '15px'
+    }
+  }
+  if (index === (size.value * size.value) - size.value) {
+    styles = {
+      'border-bottom-left-radius': '15px'
+    }
+  }
+  if (index + 1 === size.value * size.value) {
+    styles = {
+      'border-bottom-right-radius': '15px'
+    }
+  }
+  if (index < (size.value * size.value) - size.value) {
+    styles = Object.assign(styles, borderBottom)
+  }
+  if ((index + 1) % size.value !== 0) {
+    styles = Object.assign(styles, borderRight)
+  }
+
+  return styles;
+}
 import { get } from '../utils'
 const winner = ref('')
 const players = {
@@ -24,24 +84,24 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-// const [stepNumber, setStepNumber] = useState(1)
 // const [squares, setSquares] = useState(setEmptyBoard(null))
 // const [xIsNext, setXIsNext] = useState(true)
-// const [board, setBoard] = useState(setEmptyBoard());
-// const [isCPUNext, setIsCPUNext] = useState(false);
+
 // const [winner, setWinner] = useState(null);
 
 // const [ties, setTies] = useState(get('ties_24056') || 0)
+const stepNumber = ref(1)
+const ties = ref(get('ties_24056') || 0)
 // const [username1, setUsername1] = useState(get('player1_23096') || 'Player1')
 // const [username2, setUsername2] = useState(get('player2_23096') || 'Player2')
 // const [isNew, setIsNew] = useState(false)
 // const [player1, setPlayer1] = useState(0)
 // const [player2, setPlayer2] = useState(0)
-// const [showMenu, setShowMenu] = useState(true)
 // const [isLight, setIsLight] = useState(true)
 // // const [size, setSize] = useState(3)
-// const [font, setFont] = useState('cross')
 // const [solution, setSolution] = useState(false)
+
+const player1Steps = ref(0)
 
 // console.log('props.size', props.size)
 const handleNewGame = () => {
@@ -59,14 +119,19 @@ const handleSolution = () => {
   setSquares(squaresC)
 }
 
-const handleWinner = (index, indexI, value) => {
-  playFn(index, indexI)
+const handleWinner = (event) => {
+  const { id, value } = event;
+  console.log(event)
+  playFn(id)
   if (value === 'X') {
-    setPlayer1(player1 + 1)
+    player1Steps.value = player1Steps + 1
+    isCPUNext.value = true;
+    getCPUTurn()
   } else if (value === 'O') {
     setPlayer2(player2 + 1)
+    isCPUNext.value = false;
   } else {
-    setTies(ties + 1)
+    ties.value = ties.value + 1
   }
 }
 
@@ -77,20 +142,13 @@ const getStatus = (arr, play) => {
     props.handleWinner('Ties')
   }
 }
-// useEffect(() => {
-//   handleNewGame()
-//   //eslint-disable-next-line
-// }, [props.isNew])
 
-// useEffect(() => {
-//   if (props.solution) handleSolution()
-//   //eslint-disable-next-line
-// }, [props.solution])
-
-function playFn(arrayIndex, index) {
+function playFn(id) {
   if (isCPUNext) return;
   if (winner) return;
-  board[arrayIndex][index] = players?.HUMAN?.SYM;
+  const cell = board.find((el) => el.id === id )
+  console.log('cel', cell)
+  cell = players?.HUMAN?.SYM;
   setBoard((board) => [...board]);
   checkWinner();
   setIsCPUNext(true);
@@ -210,7 +268,10 @@ function playAgainFn() {
   <div class="game">
     <div class="game-board">
       <div v-if="!winner && displayTurn()"></div>
-      <Board />
+      <div class="board" :style="getStyleBoard()">
+        <Square :key="'id' + index" :id="'id' + index" v-for="(cell, index) in board" :style="getStyleCell(index)"
+          @click="playFn" :initValue="cell.value" />
+      </div>
       <h2 v-if="winner">{{ displayWinner() }}</h2>
       <button @click="playAgainFn" v-if="winner">
         Play Again

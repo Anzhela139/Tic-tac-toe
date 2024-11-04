@@ -36,6 +36,20 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  /* CSS HEX */
+  --amaranth-pink: #e08dacff;
+  --glaucous: #6a7fdbff;
+  --fluorescent-cyan: #57e2e5ff;
+  --emerald: #45cb85ff;
+  --gunmetal: #153131ff;
+
+  /* CSS HSL */
+  /* --amaranth-pink: hsla(338, 57%, 72%, 1);
+  --glaucous: hsla(229, 61%, 64%, 1);
+  --fluorescent-cyan: hsla(181, 73%, 62%, 1);
+  --emerald: hsla(149, 56%, 53%, 1);
+  --gunmetal: hsla(180, 40%, 14%, 1); */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -51,3 +65,37 @@
     --color-text: var(--vt-c-text-dark-2);
   }
 }
+
+
+
+/* SCSS HEX */
+/* $amaranth-pink: #e08dacff;
+$glaucous: #6a7fdbff;
+$fluorescent-cyan: #57e2e5ff;
+$emerald: #45cb85ff;
+$gunmetal: #153131ff; */
+
+/* SCSS HSL */
+/* $amaranth-pink: hsla(338, 57%, 72%, 1);
+$glaucous: hsla(229, 61%, 64%, 1);
+$fluorescent-cyan: hsla(181, 73%, 62%, 1);
+$emerald: hsla(149, 56%, 53%, 1);
+$gunmetal: hsla(180, 40%, 14%, 1); */
+
+/* SCSS RGB */
+/* $amaranth-pink: rgba(224, 141, 172, 1);
+$glaucous: rgba(106, 127, 219, 1);
+$fluorescent-cyan: rgba(87, 226, 229, 1);
+$emerald: rgba(69, 203, 133, 1);
+$gunmetal: rgba(21, 49, 49, 1); */
+
+/* SCSS Gradient */
+/* $gradient-top: linear-gradient(0deg, #e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff);
+$gradient-right: linear-gradient(90deg, #e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff);
+$gradient-bottom: linear-gradient(180deg, #e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff);
+$gradient-left: linear-gradient(270deg, #e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff);
+$gradient-top-right: linear-gradient(45deg, #e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff);
+$gradient-bottom-right: linear-gradient(135deg, #e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff);
+$gradient-top-left: linear-gradient(225deg, #e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff);
+$gradient-bottom-left: linear-gradient(315deg, #e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff);
+$gradient-radial: radial-gradient(#e08dacff, #6a7fdbff, #57e2e5ff, #45cb85ff, #153131ff); */

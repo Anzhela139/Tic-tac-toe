@@ -9,7 +9,7 @@ const symbol = computed(() => store.symbol)
 const emit = defineEmits(['click'])
 const active = ref(false)
 const actualValue = ref('')
-defineProps({
+const props = defineProps({
   id: {
     type: String,
     required: true
@@ -43,7 +43,11 @@ const handleClick = (event) => {
   event.preventDefault()
   active.value = true;
   actualValue.value = 'X'
-  emit('click', actualValue.value)
+
+  emit('click', { 
+    value: actualValue.value, 
+    id: props.id
+  })
 }
 
 const styleReturn = () => {

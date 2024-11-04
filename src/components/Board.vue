@@ -65,8 +65,7 @@ const getStyleCell = (index) => {
 <template>
   <div class="board" :style="getStyleBoard()">
     <Square :key="index" :id="'id' + index" v-for="(cell, index) in board" :style="getStyleCell(index)"
-      @click=""
-      :initValue="cell" />
+      @click="" :initValue="cell" />
   </div>
 </template>
 

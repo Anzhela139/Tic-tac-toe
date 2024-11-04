@@ -51,11 +51,11 @@ svg.icons:hover {
   overflow: hidden;
 }
 
-.App.light-theme {
-  color: #161616;
+.light-theme {
+  color: var(--gunmetal);
 }
 
-.App.dark-theme {
+.dark-theme {
   color: #f9f9f9;
 }
 
@@ -77,6 +77,10 @@ svg.icons:hover {
 
 .dark-theme .svg_background {
   background: linear-gradient(25deg, #1768c5, #985b99, #d1456d, #ff0542);
+}
+
+.light-theme .svg_background {
+  opacity: .4;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -288,6 +292,10 @@ input.switch_toggle-input:checked+label:after {
   backdrop-filter: blur(5px);
 }
 
+.light-theme .board .cell {
+  background-color: rgba(249, 249, 249, .6)
+}
+
 .line{
   content:'';
   position:absolute;
@@ -487,6 +495,9 @@ input.switch_toggle-input:checked+label:after {
   appearance: none;
   outline: none;
   height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0 1rem;
   border-radius: 5px;
   font-size: calc( (100vw - 480px)/(1280 - 480) * (24 - 16) + 16px);

@@ -37,96 +37,96 @@ const path = `../../assets/music/`
 
 const playAudio = (audio) => {
 
-    // audioDOM.current.src = `${path}${audios.value[audio.value]}`
+  // audioDOM.current.src = `${path}${audios.value[audio.value]}`
 
 
-    // var audiovar = new Audio(audios.value[audio]);
-    // console.log(audiovar)
-    // console.log(audiovar.networkState)
-    // audiovar.play();
-    setSrcAudio(audios.value[audio])
-    console.log(srcAudio)
-    console.log(audios.value[audio], audio)
-    audioDOM.current.pause()
-    audioDOM.current.load()
-    audioDOM.current.addEventListener(
-        'canplaythrough',
-        function (params) {
-            this.play()
-            handleDuration(this.duration)
-        },
-        false,
-    )
+  // var audiovar = new Audio(audios.value[audio]);
+  // console.log(audiovar)
+  // console.log(audiovar.networkState)
+  // audiovar.play();
+  setSrcAudio(audios.value[audio])
+  console.log(srcAudio)
+  console.log(audios.value[audio], audio)
+  audioDOM.current.pause()
+  audioDOM.current.load()
+  audioDOM.current.addEventListener(
+    'canplaythrough',
+    function (params) {
+      this.play()
+      handleDuration(this.duration)
+    },
+    false,
+  )
 
 }
 
 const reload = () => {
-    try {
-        setActive(true)
-        setCurrI(currI + 1)
-        const song = randomMusic[currI]
-        // setSrcAudio(song)
-        // audioDOM.current.src = `${path}${song}`
-        console.log(audioDOM.current)
-        audioDOM.current.pause()
-        audioDOM.current.load()
-        audioDOM.current.addEventListener(
-            'canplaythrough',
-            function (params) {
-                this.play()
-                handleDuration(this.duration)
-            },
-            false,
-        )
-    } catch (error) {
-        console.log(error)
-    }
-    //eslint-disable-next-line
+  try {
+    setActive(true)
+    setCurrI(currI + 1)
+    const song = randomMusic[currI]
+    // setSrcAudio(song)
+    // audioDOM.current.src = `${path}${song}`
+    console.log(audioDOM.current)
+    audioDOM.current.pause()
+    audioDOM.current.load()
+    audioDOM.current.addEventListener(
+      'canplaythrough',
+      function (params) {
+        this.play()
+        handleDuration(this.duration)
+      },
+      false,
+    )
+  } catch (error) {
+    console.log(error)
+  }
+  //eslint-disable-next-line
 }
 const stopMusic = (event) => {
-    audioDOM.pause()
-    audioDOM.currentTime = 0
-    setActive(false)
+  audioDOM.pause()
+  audioDOM.currentTime = 0
+  setActive(false)
 }
 
 const volumeUp = (event) => {
-    if (audioDOM.volume < 1) audioDOM.volume += 0.1
+  if (audioDOM.volume < 1) audioDOM.volume += 0.1
 }
 
 const volumeDown = (event) => {
-    if (audioDOM.volume > 0) audioDOM.volume -= 0.1
+  if (audioDOM.volume > 0) audioDOM.volume -= 0.1
 }
 
 const handleAudio = (event) => {
-    event.preventDefault()
-    const audiosrc = event.target?.value
-    console.log(event.target?.value)
-    dispatch(changeAudio(audiosrc));
-    console.log(audio)
-    // playAudio(audios.valuerc)
+  event.preventDefault()
+  const audiosrc = event.target?.value
+  console.log(event.target?.value)
+  dispatch(changeAudio(audiosrc));
+  console.log(audio)
+  // playAudio(audios.valuerc)
 }
 
 const handleDuration = (len, cur) => {
-    const duration = len / 100
-    setTimeout(() => {
-        console.log(duration)
-    }, 1000)
+  const duration = len / 100
+  setTimeout(() => {
+    console.log(duration)
+  }, 1000)
 }
 </script>
 
 <template>
-    <div class="wrapper-sound">
-        <md-outlined-select label='Select audio' @input={handleAudio}>
-            <md-select-option value='' selected>
-                <div slot="headline"></div>
-            </md-select-option>
-            {audios.value.map(function (object, i) {
-            return <md-select-option value={object.id} key={object.id}>
-                <div slot="headline">{object.title}</div>
-            </md-select-option>
-            })}
-        </md-outlined-select>
-    </div>
+  <div class="wrapper-sound">
+    <md-outlined-select label='Select audio' @input={ handleAudio }>
+      <md-select-option value='' selected>
+        <div slot="headline"></div>
+      </md-select-option>
+      {audios.value.map(function (object, i) {
+      return <md-select-option value={object.id} key={object.id}>
+        <div slot="headline">{object.title}</div>
+      </md-select-option>
+      })}
+    </md-outlined-select>
+  </div>
 </template>
 
 <style scoped></style>
