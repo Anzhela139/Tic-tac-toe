@@ -1,0 +1,16 @@
+.multiselect {
+  color: #fff;
+}
+
+.multiselect__tags {
+  background-color: var(--theme-background-color);
+}
+
+.multiselect__input,
+.multiselect__single,
+.multiselect__spinner,
+.multiselect__content-wrapper,
+.multiselect__option--disabled {
+  background-color: var(--theme-background-color) !important;
+}
+

@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Hand-Board';
+    font-weight: 400;
+    font-style: normal;
+    src: url('../fonts/hand-board/otf/hand-board-hand-board-svg-400.otf');
+}
+
+@font-face {
+    font-family: 'Blokletters-Balpen';
+    font-weight: 400;
+    font-style: normal;
+    src: url('../fonts/Blokletters-Potlood/Blokletters-Balpen.ttf');
+}
+
+@font-face {
+    font-family: 'Blokletters-Potlood';
+    font-weight: 400;
+    font-style: normal;
+    src: url('../fonts/Blokletters-Potlood/Blokletters-Potlood.ttf');
+}
+
+@font-face {
+    font-family: 'Blokletters-Viltstift';
+    font-weight: 400;
+    font-style: normal;
+    src: url('../fonts/Blokletters-Potlood/Blokletters-Viltstift.ttf');
+}
