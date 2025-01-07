@@ -151,6 +151,7 @@ const audios = [
 ]
 
 const player = get('player1') || "Player1"
+const scores = get('scores') || []
 const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 
 const mode = get('mode') || isDark ? 'dark' : 'light'
@@ -163,19 +164,18 @@ export const useStore = defineStore('storeApp', {
       size: size,
       mode: mode,
       symbol: symbol,
-      victory: {
-        type: Number,
-        default: 0
-      },
+      victory: 0,
       defeat: 0,
       IsMultiPlayer: false,
       login: player,
       isCurrentlyPlaying: false,
+      scores: scores,
       isSavedGame: false,
       audio: '',
       audios: audios,
       move: 0,
       board: setEmptyBoard(size, ''),
+      time: ''
     }
   },
   getters: {
@@ -188,11 +188,13 @@ export const useStore = defineStore('storeApp', {
     getIsMultiPlayer: (state) => state.IsMultiPlayer,
     getLogin: (state) => state.login,
     getIsCurrentlyPlaying: (state) => state.isCurrentlyPlaying,
+    getScores: (state) => state.scores,
     getIsSavedGame: (state) => state.isSavedGame,
     getAudio: (state) => state.audio,
     getAudios: (state) => state.audios,
     getMove: (state) => state.move,
     getBoard: (state) => state.board,
+    getTime: (state) => state.time,
   },
   actions: {
     setMenu(value) {
@@ -233,6 +235,10 @@ export const useStore = defineStore('storeApp', {
     setIsCurrentlyPlaying() {
       this.isCurrentlyPlaying = !this.isCurrentlyPlaying;
     },
+    setScores(value) {
+      this.scores.push(value);
+      set('scores', this.scores);
+    },
     setIsSavedGame() {
       this.isSavedGame = !this.isSavedGame;
     },
@@ -247,6 +253,9 @@ export const useStore = defineStore('storeApp', {
     },
     setBoard(value) {
       this.board = value;
+    },
+    setTime(value) {
+      this.time = value;
     },
   },
 })

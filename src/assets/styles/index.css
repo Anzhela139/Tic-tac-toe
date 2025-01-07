@@ -402,6 +402,7 @@ input.switch_toggle-input:checked+label:after {
 .modal-header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
+  align-items: center;
 }
 
 .modal-header {
@@ -506,6 +507,7 @@ input.switch_toggle-input:checked+label:after {
   background-color: transparent;
   border: 2px solid #61dafb;
   color: #61dafb;
+  transition: all .3s ease-in-out;
 }
 
 
@@ -523,6 +525,7 @@ input.switch_toggle-input:checked+label:after {
   transition: .3s ease-in-out;
   cursor: pointer;
   white-space: nowrap;
+  transition: all .3s ease-in-out;
 }
 
 .light-theme .btn-primary {
@@ -538,6 +541,12 @@ input.switch_toggle-input:checked+label:after {
 .btn-primary:hover,
 .btn-secondary:hover {
   box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.15);
+}
+
+.dark-theme .btn-primary:hover,
+.dark-theme .btn-secondary:hover {
+  box-shadow: 4px 4px 5px 0px rgba(97, 218, 251, .15);
+  background-color: rgba(97, 218, 251, .12);
 }
 
 select {

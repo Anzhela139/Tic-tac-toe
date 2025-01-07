@@ -34,10 +34,10 @@ const defeat = computed(() => store.defeat)
     </div>
     <div class="statistics" v-if="isCurrentlyPlaying">
       <h2>
-        {{ login.value }}: {{ move.value }}
+        {{ login }}: {{ move }}
       </h2>
-      <h2>Victories: {{ victory.value }}</h2>
-      <h2>Defeats: {{ defeat.value }}</h2>
+      <h2>Victories: {{ victory }}</h2>
+      <h2>Defeats: {{ defeat }}</h2>
       <h2>
         <Timer />
       </h2>

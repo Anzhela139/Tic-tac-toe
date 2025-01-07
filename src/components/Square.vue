@@ -63,7 +63,7 @@ const handleWinner = () => {
 <template>
   <div class="cell" @click="handleClick">
     <template v-if="initValue || actualValue">
-      <span v-if="symbol === 'cross'">X</span>
+      <span v-if="symbol === 'cross'">{{ initValue }}</span>
       <SvgIcon :path="mdiBeeFlower" type="mdi" v-else />
     </template>
   </div>
