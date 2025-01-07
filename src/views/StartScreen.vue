@@ -82,21 +82,39 @@ const handleNewGame = () => {
       <router-link to="/gameplay" class="btn btn-secondary" tag="button">
         Gameplay
       </router-link>
-      <button class="btn btn-secondary" type='button' @click="handleMenu(router, 'settings')">
+      <router-link to="/settings" class="btn btn-secondary" tag="button">
         Settings
-      </button>
-      <button class="btn btn-secondary" type='button' @click="handleMenu(router, '/')" v-if="isCurrentlyPlaying">
-        Save current game
-      </button>
-      <button class="btn btn-primary" type='button' @click="handleMenu(router, '/')">
-        Start new game
-      </button>
-      <button class="btn btn-secondary" type='button' @click="handleMenu(router, '/')" v-if="isSavedGame">
-        Resume saved game
-      </button>
+      </router-link>
+      <router-link to="/scores" class="btn btn-secondary" tag="button">
+        See scores
+      </router-link>
+
+      <div class="start-screen__gameplay">
+        <button class="btn btn-secondary" type='button' @click="handleMenu(router, '/')" v-if="isCurrentlyPlaying">
+          Save current game
+        </button>
+        <button class="btn btn-primary" type='button' @click="handleMenu(router, '/')">
+          Start new game
+        </button>
+        <button class="btn btn-secondary" type='button' @click="handleMenu(router, '/')" v-if="isSavedGame">
+          Resume saved game
+        </button>
+      </div>
     </div>
     </Base>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.start-screen__gameplay {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+
+  .btn {
+    flex: 1;
+  }
+}
+</style>

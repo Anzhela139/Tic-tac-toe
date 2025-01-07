@@ -1,13 +1,15 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import Board from './../components/Board.vue'
 import { isEndgame } from '../utils'
 import { useStore } from './../stores/main'
 import Square from '../components/Square.vue';
-
+import { useRoute, useRouter } from 'vue-router'
 const store = useStore()
 const size = computed(() => store.size);
 const board = computed(() => store.board);
+const login = computed(() => store.login)
+const isCurrentlyPlaying = computed(() => store.isCurrentlyPlaying)
 const isCPUNext = ref(false)
 
 // defineProps({
@@ -67,14 +69,15 @@ import { get } from '../utils'
 const winner = ref('')
 const players = {
   CPU: {
-    SYM: 0, // "O",
+    SYM: "O",
     NAME: "CPU",
   },
   HUMAN: {
-    SYM: 1 || "X",
+    SYM: "X",
     NAME: "You",
   },
 };
+const router = useRouter()
 
 function sleep(milliseconds) {
   const date = Date.now();
@@ -102,6 +105,8 @@ const ties = ref(get('ties_24056') || 0)
 // const [solution, setSolution] = useState(false)
 
 const player1Steps = ref(0)
+
+let currentTimer = null
 
 // console.log('props.size', props.size)
 const handleNewGame = () => {
@@ -143,91 +148,108 @@ const getStatus = (arr, play) => {
   }
 }
 
-function playFn(id) {
-  if (isCPUNext) return;
-  if (winner) return;
-  const cell = board.find((el) => el.id === id )
-  console.log('cel', cell)
-  cell = players?.HUMAN?.SYM;
-  setBoard((board) => [...board]);
+function playFn(values) {
+  const { value, id } = values;
+  // if (isCPUNext.value) return;
+  if (winner.value) return;
+  console.log('playFn', board.value)
+  let cellIndex = board.value.findIndex((el) => el.id === id)
+  if (board.value[cellIndex].value) return;
+  board.value[cellIndex].value = players?.HUMAN?.SYM;
+  console.log('cel', board.value[cellIndex].value)
+  store.setBoard(board);
   checkWinner();
-  setIsCPUNext(true);
+  if (currentTimer) {
+    clearTimeout(currentTimer);
+    cPUPlay();
+  }
+  currentTimer = setTimeout(() => {
+    cPUPlay();
+    currentTimer = null;
+  }, 1000)
 }
 
-// useEffect(() => {
-//   if (winner) return;
-//   if (isCPUNext) {
-//     cPUPlay();
-//   }
-// }, [isCPUNext]);
+watch(isCPUNext, (newValue, oldValue) => {
+  console.log('watch', winner.value, newValue)
+  if (winner.value) return;
+  if (newValue) {
+    cPUPlay();
+  }
+})
 
 function cPUPlay() {
-  if (winner) return;
-  sleep(1000);
+  if (winner.value) return;
 
   const cPUMove = getCPUTurn();
-
-  board[cPUMove.arrayIndex][cPUMove.index] = players?.CPU?.SYM;
-
-  setBoard((board) => [...board]);
+  let cellIndex = board.value.findIndex((el) => el.id === cPUMove)
+  board.value[cellIndex].value = players?.CPU?.SYM;
+  console.log('players?.CPU?.SYM', board.value[cellIndex].value)
+  store.setBoard(board);
   checkWinner();
-  setIsCPUNext(false);
+  isCPUNext.value = false;
 }
 
 function getCPUTurn() {
   const emptyIndexes = [];
-  board.forEach((row, arrayIndex) => {
-    row.forEach((cell, index) => {
-      if (cell === "") {
-        emptyIndexes.push({ arrayIndex, index });
-      }
-    });
+  const boardArray = [...board.value]
+  boardArray.forEach((cell, arrayIndex) => {
+    if (cell.value === "") {
+      emptyIndexes.push({ id: cell.id });
+    }
   });
   const randomIndex = Math.floor(Math.random() * emptyIndexes.length);
-  return emptyIndexes[randomIndex];
+  console.log(emptyIndexes, randomIndex)
+  return emptyIndexes[randomIndex].id;
 }
 
 function checkWinner() {
+  const boardArray = [...board.value]
+  console.log('boardArray', boardArray)
   // check same row
-  for (let index = 0; index < board.length; index++) {
-    const row = board[index];
-    if (row.every((cell) => cell === players?.CPU?.SYM)) {
+  for (let index = 0; index < size.value; index++) {
+    const row = boardArray.slice(index * size.value, index * size.value + size.value);
+    if (row.every((cell) => cell.value === players?.CPU?.SYM)) {
       setWinner(players?.CPU?.NAME);
       return;
-    } else if (row.every((cell) => cell === players?.HUMAN?.SYM)) {
+    } else if (row.every((cell) => cell.value === players?.HUMAN?.SYM)) {
       setWinner(players?.HUMAN?.NAME);
       return;
     }
   }
 
   // check same column
-  for (let i = 0; i < 3; i++) {
-    const column = board.map((row) => row[i]);
-    if (column.every((cell) => cell === players?.CPU?.SYM)) {
+  for (let i = 0; i < size.value; i++) {
+    const indexes = Array(size.value).fill(0).map((el, index) => i + (index * size.value));
+    const column = indexes.map((el) => boardArray[el]);
+
+    if (column.every((cell) => cell?.value === players?.CPU?.SYM)) {
       setWinner(players?.CPU?.NAME);
       return;
-    } else if (column.every((cell) => cell === players?.HUMAN?.SYM)) {
+    } else if (column.every((cell) => cell?.value === players?.HUMAN?.SYM)) {
       setWinner(players?.HUMAN?.NAME);
+
       return;
     }
   }
 
   // check same diagonal
-  const diagonal1 = [board[0][0], board[1][1], board[2][2]];
-  const diagonal2 = [board[0][2], board[1][1], board[2][0]];
-  if (diagonal1.every((cell) => cell === players?.CPU?.SYM)) {
+  const diagonal1 = [boardArray[0], boardArray[4], boardArray[8]];
+  const diagonal2 = [boardArray[2], boardArray[4], boardArray[6]];
+  console.log('diagonal1', diagonal1)
+  console.log('diagonal2', diagonal2)
+  if (diagonal1.every((cell) => cell?.value === players?.CPU?.SYM)) {
     setWinner(players?.CPU?.NAME);
     return;
-  } else if (diagonal1.every((cell) => cell === players?.HUMAN?.SYM)) {
+  } else if (diagonal1.every((cell) => cell?.value === players?.HUMAN?.SYM)) {
     setWinner(players?.HUMAN?.NAME);
     return;
-  } else if (diagonal2.every((cell) => cell === players?.CPU?.SYM)) {
+  } else if (diagonal2.every((cell) => cell?.value === players?.CPU?.SYM)) {
     setWinner(players?.CPU?.NAME);
     return;
-  } else if (diagonal2.every((cell) => cell === players?.HUMAN?.SYM)) {
+  } else if (diagonal2.every((cell) => cell?.value === players?.HUMAN?.SYM)) {
     setWinner(players?.HUMAN?.NAME);
     return;
-  } else if (board.flat().every((cell) => cell !== "")) {
+  } else if (boardArray.every((cell) => cell.value !== "")) {
     setWinner("draw");
     return;
   } else {
@@ -236,16 +258,32 @@ function checkWinner() {
   }
 }
 
-function displayWinner() {
-  if (winner === "draw") {
+function setWinner(value) {
+  winner.value = value;
+  if (!value) return;
+  router.push({ path: 'end-game' })
+  if (value === "draw") {
     return "It's a draw!";
-  } else if (winner) {
-    return `${winner} won!`;
+  } else if (value) {
+    if (login.value === value) {
+      store.setVictory();
+    } else {
+      store.setDefeat();
+    }
+
+    store.setScores({
+      time: '10:08',
+      playerName: 'player1', 
+      moves: 3,
+      result: 'victory',
+      id: 'sakjhd'
+    })
+
+    return `${value} won!`;
   }
 }
 
 function displayTurn() {
-  return
   if (isCPUNext) {
     return "CPU's turn";
   } else {
@@ -259,9 +297,13 @@ function playAgainFn() {
     ["", "", ""],
     ["", "", ""],
   ]);
-  setWinner(null);
-  setIsCPUNext(false);
+  winner.value = null;
+  isCPUNext.value = false;
 }
+
+onMounted(() => {
+  store.setIsCurrentlyPlaying(true);
+})
 </script>
 
 <template>
@@ -272,7 +314,6 @@ function playAgainFn() {
         <Square :key="'id' + index" :id="'id' + index" v-for="(cell, index) in board" :style="getStyleCell(index)"
           @click="playFn" :initValue="cell.value" />
       </div>
-      <h2 v-if="winner">{{ displayWinner() }}</h2>
       <button @click="playAgainFn" v-if="winner">
         Play Again
       </button>
