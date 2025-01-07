@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, computed, onMounted } from 'vue'
 import SvgIcon from '@jamescoyle/vue-icon';
-import { useStore } from './../stores/main'
+import { useStore } from '../stores/main'
 import { mdiMusic } from '@mdi/js';
 import { mdiVolumeHigh } from '@mdi/js';
 import { mdiRepeat } from '@mdi/js';
@@ -12,7 +12,7 @@ import { mdiPause } from '@mdi/js';
 import { mdiSkipNext } from '@mdi/js';
 import { mdiSkipPrevious } from '@mdi/js';
 import { useRoute, useRouter } from 'vue-router'
-import { handleMenu } from './../composables/handleMenu'
+import { handleMenu } from '../composables/handleMenu'
 import { randomizeArray } from '../utils'
 import { ref } from 'vue';
 
