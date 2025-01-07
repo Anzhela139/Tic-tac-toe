@@ -1,7 +1,12 @@
 # Tic tac toe
 
-This template should help get you started developing with Vue 3 in Vite.
+Tic Tac Toe Game with Vue3, Vite, Pinia, Sass
 
+[Demo Tic Tac Toe](https://anzhela139.github.io/momentum/)
+
+Gameplay ![image info](https://github.com/Anzhela139/Tic-tac-toe/blob/main/screenshots/gameplay.png)
+Menu ![image info](https://github.com/Anzhela139/Tic-tac-toe/blob/main/screenshots/menu.png)
+Settings ![image info](https://github.com/Anzhela139/Tic-tac-toe/blob/main/screenshots/settings.png)
 
 
 ## Project Setup
